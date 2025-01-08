@@ -2,6 +2,6 @@
 
 © 2024 William Stafford Parsons
 
-WSP-Hash-256 is the fastest portable 256-bit cryptographic hashing algorithm as a substantial improvement to SHA-256.
+WSP-Hash-256 is a 256-bit cryptographic hashing algorithm without input padding, parallel memory reading or prime number vulnerabilities as a substantial improvement to BLAKE, SHA-256 and other cryptographic hashing algorithms.
 
-Read more [here](https://williamstaffordparsons.github.io/wsp-hash-256/).
+Read more [here](https://williamstaffordparsons.github.io/wsp-hash-256).
