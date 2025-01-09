@@ -36,7 +36,7 @@ void wsp_hash_256(const unsigned long input_count, const uint8_t *input,
       input[i] + s->mix[(i + 1) & 7] + s->mix[(i - 1) & 7] + 111111111
     ) << 8;
     s->mix_offset[i & 7] ^= ((
-      ((input[i] << 24) | (s->mix[i - 1 & 7] >> 8)) + s->mix[i & 7]
+      ((input[i] << 24) | (s->mix[(i - 1) & 7] >> 8)) + s->mix[i & 7]
     ) >> 2) + s->mix[i & 7] + input[i] + 11;
     i++;
   }
@@ -54,9 +54,8 @@ void wsp_hash_256(const unsigned long input_count, const uint8_t *input,
   s->mix_offset[4] += (s->mix[4] + s->mix_offset[5]) ^ s->mix_offset[2];
   s->mix_offset[5] += s->mix[5] ^ (s->mix_offset[4] + s->mix_offset[6]);
   s->mix_offset[6] += (s->mix[6] + s->mix_offset[7]) ^ s->mix_offset[3];
-  s->mix_offset[7] += ((
-    s->mix[1] ^ s->mix[2] ^ s->mix[3]
-  ) << 16) | ((s->mix[4] ^ s->mix[5] ^ s->mix[6]) >> 16) + s->mix[7];
+  s->mix_offset[7] += ((s->mix[1] ^ s->mix[2] ^ s->mix[3]) << 16)
+    | (((s->mix[4] ^ s->mix[5] ^ s->mix[6]) >> 16) + s->mix[7]);
   i = 24;
 
   while (i != 9) {
@@ -134,7 +133,7 @@ void wsp_hash_256_transform(unsigned long i, const unsigned long input_count,
       input[i] + s->mix[(i + 1) & 7] + s->mix[(i - 1) & 7] + 111111111
     ) << 8;
     s->mix_offset[i & 7] ^= ((
-      ((input[i] << 24) | (s->mix[i - 1 & 7] >> 8)) + s->mix[i & 7]
+      ((input[i] << 24) | (s->mix[(i - 1) & 7] >> 8)) + s->mix[i & 7]
     ) >> 2) + s->mix[i & 7] + input[i] + 11;
     i++;
   }
@@ -156,9 +155,8 @@ void wsp_hash_256_finalize(struct wsp_hash_256_s *s) {
   s->mix_offset[4] += (s->mix[4] + s->mix_offset[5]) ^ s->mix_offset[2];
   s->mix_offset[5] += s->mix[5] ^ (s->mix_offset[4] + s->mix_offset[6]);
   s->mix_offset[6] += (s->mix[6] + s->mix_offset[7]) ^ s->mix_offset[3];
-  s->mix_offset[7] += ((
-    s->mix[1] ^ s->mix[2] ^ s->mix[3]
-  ) << 16) | ((s->mix[4] ^ s->mix[5] ^ s->mix[6]) >> 16) + s->mix[7];
+  s->mix_offset[7] += ((s->mix[1] ^ s->mix[2] ^ s->mix[3]) << 16)
+    | (((s->mix[4] ^ s->mix[5] ^ s->mix[6]) >> 16) + s->mix[7]);
 
   while (i != 9) {
     s->mix[7] += ((
