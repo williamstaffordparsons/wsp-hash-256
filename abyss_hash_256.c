@@ -1,7 +1,7 @@
-#include "wsp_hash_256.h"
+#include "abyss_hash_256.h"
 
-void wsp_hash_256(const unsigned long input_count, const uint8_t *input,
-                  struct wsp_hash_256_s *s) {
+void abyss_hash_256(const unsigned long input_count, const uint8_t *input,
+                    struct abyss_hash_256_s *s) {
   unsigned long i = 0;
 
   s->mix[0] = 1111111111;
@@ -95,8 +95,8 @@ void wsp_hash_256(const unsigned long input_count, const uint8_t *input,
   }
 }
 
-void wsp_hash_256_initialize(const unsigned long input_count,
-                             const uint8_t *input, struct wsp_hash_256_s *s) {
+void abyss_hash_256_initialize(const unsigned long input_count,
+                               const uint8_t *input, struct abyss_hash_256_s *s) {
   unsigned char i = 0;
 
   s->mix[0] = 1111111111;
@@ -126,8 +126,9 @@ void wsp_hash_256_initialize(const unsigned long input_count,
   s->mix_offset[7] = s->mix[7];
 }
 
-void wsp_hash_256_transform(unsigned long i, const unsigned long input_count,
-                            const uint8_t *input, struct wsp_hash_256_s *s) {
+void abyss_hash_256_transform(unsigned long i, const unsigned long input_count,
+                              const uint8_t *input,
+                              struct abyss_hash_256_s *s) {
   while (i != input_count) {
     s->mix[i & 7] += (
       input[i] + s->mix[(i + 1) & 7] + s->mix[(i - 1) & 7] + 111111111
@@ -145,7 +146,7 @@ void wsp_hash_256_transform(unsigned long i, const unsigned long input_count,
   }
 }
 
-void wsp_hash_256_finalize(struct wsp_hash_256_s *s) {
+void abyss_hash_256_finalize(struct abyss_hash_256_s *s) {
   unsigned char i = 24;
 
   s->mix_offset[0] += (s->mix[0] + s->mix_offset[1]) ^ s->mix_offset[0];
