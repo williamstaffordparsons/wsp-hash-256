@@ -96,7 +96,8 @@ void abyss_hash_256(const unsigned long input_count, const uint8_t *input,
 }
 
 void abyss_hash_256_initialize(const unsigned long input_count,
-                               const uint8_t *input, struct abyss_hash_256_s *s) {
+                               const uint8_t *input,
+                               struct abyss_hash_256_s *s) {
   unsigned char i = 0;
 
   s->mix[0] = 1111111111;
